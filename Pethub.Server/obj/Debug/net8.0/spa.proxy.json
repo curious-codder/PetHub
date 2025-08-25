@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:51691",
+"RedirectUrl": "",
+"LaunchCommand": "npm run dev",
+"WorkingDirectory": "C:\\Users\\https\\OneDrive\\Desktop\\Project\\PethubProject\\Pethub\\Pethub.Server\\..\\pethub.client",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

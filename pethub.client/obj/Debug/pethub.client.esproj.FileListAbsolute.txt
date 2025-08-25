@@ -1,0 +1,5 @@
+C:\Users\https\OneDrive\Desktop\Dev Stuff\New folder\pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
+D:\Works\webdev\React_projects\pethub\pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
+D:\Works\webdev\React_projects\pethub\pethub\pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
+C:\Users\https\OneDrive\Desktop\2025\pethub\pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
+C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache

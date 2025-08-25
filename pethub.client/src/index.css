@@ -1,0 +1,232 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Pet-themed beautiful color palette */
+    --background: 32 100% 97%;
+    --foreground: 20 14.3% 4.1%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+
+    /* Warm orange primary - pet-friendly and energetic */
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 25 95% 65%;
+
+    /* Warm cream secondary */
+    --secondary: 39 77% 91%;
+    --secondary-foreground: 20 14.3% 4.1%;
+
+    /* Soft muted colors */
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+
+    /* Playful accent colors */
+    --accent: 47 97% 88%;
+    --accent-foreground: 20 14.3% 4.1%;
+
+    /* Success green for positive actions */
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    /* Destructive red */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border and input styling */
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 25 95% 53%;
+
+    /* Radius for rounded elements */
+    --radius: 0.75rem;
+
+    /* Gradients for beautiful effects */
+    --gradient-primary: linear-gradient(135deg, hsl(25 95% 53%), hsl(25 95% 65%));
+    --gradient-secondary: linear-gradient(135deg, hsl(39 77% 91%), hsl(47 97% 88%));
+    --gradient-background: linear-gradient(180deg, hsl(32 100% 97%), hsl(39 77% 95%));
+
+    /* Shadows for depth */
+    --shadow-soft: 0 4px 6px -1px hsl(25 95% 53% / 0.1), 0 2px 4px -2px hsl(25 95% 53% / 0.1);
+    --shadow-medium: 0 10px 15px -3px hsl(25 95% 53% / 0.1), 0 4px 6px -4px hsl(25 95% 53% / 0.1);
+    --shadow-large: 0 20px 25px -5px hsl(25 95% 53% / 0.1), 0 8px 10px -6px hsl(25 95% 53% / 0.1);
+
+    /* Sidebar styling */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 25 95% 53%;
+
+    /* Animation timings */
+    --animation-fast: 0.15s;
+    --animation-normal: 0.3s;
+    --animation-slow: 0.5s;
+  }
+
+  .dark {
+    /* Dark theme pet-friendly colors */
+    --background: 20 14.3% 4.1%;
+    --foreground: 32 100% 97%;
+
+    --card: 20 14.3% 8.1%;
+    --card-foreground: 32 100% 97%;
+
+    --popover: 20 14.3% 8.1%;
+    --popover-foreground: 32 100% 97%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 25 95% 65%;
+
+    --secondary: 20 14.3% 15.1%;
+    --secondary-foreground: 32 100% 97%;
+
+    --muted: 20 14.3% 12.1%;
+    --muted-foreground: 25 5.3% 65.1%;
+
+    --accent: 25 95% 20%;
+    --accent-foreground: 32 100% 97%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 20 14.3% 15.1%;
+    --input: 20 14.3% 15.1%;
+    --ring: 25 95% 53%;
+
+    --sidebar-background: 20 14.3% 6.1%;
+    --sidebar-foreground: 32 100% 97%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 20 14.3% 12.1%;
+    --sidebar-accent-foreground: 32 100% 97%;
+    --sidebar-border: 20 14.3% 15.1%;
+    --sidebar-ring: 25 95% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Custom components for PawSphere */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-background {
+    background: var(--gradient-background);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-large {
+    box-shadow: var(--shadow-large);
+  }
+
+  .pet-card {
+    @apply bg-card border border-border rounded-lg p-4 shadow-soft hover:shadow-medium transition-all duration-300 hover:scale-105;
+  }
+
+  .pet-card-image {
+    @apply w-full h-48 object-cover rounded-lg mb-4;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-2 rounded-lg font-medium transition-colors shadow-soft hover:shadow-medium;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 px-6 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  .btn-success {
+    @apply bg-success text-success-foreground hover:bg-success/90 px-6 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  .heart-button {
+    @apply text-muted-foreground hover:text-red-500 transition-colors duration-200 cursor-pointer;
+  }
+
+  .heart-button.liked {
+    @apply text-red-500;
+  }
+
+  .search-input {
+    @apply w-full px-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  }
+
+  .category-chip {
+    @apply px-3 py-1 bg-accent text-accent-foreground rounded-full text-sm font-medium hover:bg-accent/80 transition-colors cursor-pointer;
+  }
+
+  .price-tag {
+    @apply text-primary font-bold text-lg;
+  }
+
+  .pet-status {
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .pet-status.available {
+    @apply bg-success/10 text-success;
+  }
+
+  .pet-status.sold {
+    @apply bg-destructive/10 text-destructive;
+  }
+
+  .shop-card {
+    @apply bg-card border border-border rounded-xl p-6 shadow-medium hover:shadow-large transition-all duration-300;
+  }
+
+  .user-avatar {
+    @apply w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold;
+  }
+
+  .message-bubble {
+    @apply max-w-xs lg:max-w-md px-4 py-2 rounded-lg;
+  }
+
+  .message-bubble.sent {
+    @apply bg-primary text-primary-foreground ml-auto;
+  }
+
+  .message-bubble.received {
+    @apply bg-muted text-muted-foreground mr-auto;
+  }
+}
