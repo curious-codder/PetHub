@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pethub.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74f5d6b5366ed12939294c2daf03655c7e8a2917")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2808e4be3909917ef2244d796d0aa440a736c66")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pethub.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pethub.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

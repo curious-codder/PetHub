@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Pethub.Server.CustomModels;
 using Pethub.Server.Models;
+using System.Text.Json;
 
 namespace Pethub.Server.Controllers
 {
@@ -27,44 +29,114 @@ namespace Pethub.Server.Controllers
         }
 
         [HttpPost("AddUpdatePetImage")]
-        public async Task<ActionResult<PetImageDTO>> AddUpdatePetImage([FromBody] PetImageDTO image)
+        public async Task<ActionResult> AddUpdatePetImage([FromForm] List<IFormFile> uploadImages, [FromForm] string UserInputData)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            try
             {
-                try
+                if (string.IsNullOrEmpty(UserInputData))
+                    return BadRequest("Important values are missing !!.");
+
+            //    var imageData = JsonSerializer.Deserialize<PetImageDTO>(UserInputData);
+                var options = new JsonSerializerOptions
                 {
-                    PetImage petImage = new PetImage();
+                    PropertyNameCaseInsensitive = true
+                };
 
-                    petImage.ListingId = image.ListingId;
-                    petImage.ImageUrl = image.ImageUrl;
-                    petImage.IsPrimary = image.IsPrimary;
-                    petImage.Caption = image.Caption;
-                    petImage.SortOrder = image.SortOrder;
-                    petImage.CreatedAt = image.CreatedAt;
+                var imageData = JsonSerializer.Deserialize<PetImageDTO>(UserInputData, options);
 
+                if ((uploadImages == null || !uploadImages.Any()) && string.IsNullOrEmpty(imageData.ImageUrl))
+                    return BadRequest("Important values are missing !!.");
 
-                    if (petImage.ImageId != 0)
+                var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "Images", "PetListingImages");
+                if (!Directory.Exists(uploadDirectory)) 
+                    Directory.CreateDirectory(uploadDirectory);
+
+                var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                var uploadedUrls = new List<string>();
+
+                // Loop through each uploaded file
+                foreach (var file in uploadImages)
+                {
+                    if (file != null && file.Length > 0)
                     {
-                        petImage.ImageId = image.ImageId;
-                        _context.PetImages.Update(petImage);
-                    }
-                    else
-                    {
+                        var uniqueFileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                        var filePath = Path.Combine(uploadDirectory, uniqueFileName);
+                        var relativePath = $"/Uploads/Images/PetListingImages/{uniqueFileName}";
+                        var fileUrl = baseUrl + relativePath;
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        uploadedUrls.Add(fileUrl);
+
+                        // Save each image as a new DB row
+                        var petImage = new PetImage
+                        { 
+                            ListingId = imageData.ListingId,
+                            IsPrimary = imageData.IsPrimary,
+                            Caption = imageData.Caption,
+                            SortOrder = imageData.SortOrder,
+                            CreatedAt = DateTime.UtcNow,
+                            ImageUrl = fileUrl
+                        };
+
                         _context.PetImages.Add(petImage);
                     }
-                    await _context.SaveChangesAsync();
-                    return Ok(petImage);
                 }
-                catch (Exception ex)
-                {
-                    return StatusCode(StatusCodes.Status500InternalServerError, new
-                    {
-                        error = ex.Message,
-                        innerException = ex.InnerException?.Message
-                    });
-                }
+
+                await _context.SaveChangesAsync();
+                return Ok(new { UploadedImages = uploadedUrls });
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    error = ex.Message,
+                    innerException = ex.InnerException?.Message
+                });
+            }
         }
-    }
+
+        [HttpGet("GetByListingId/{listingId}")]
+        public async Task<ActionResult<IEnumerable<PetImageDTO>>> GetByListingId(long listingId)
+        {
+            try
+            {
+                var images = await _context.PetImages
+                    .Where(i => i.ListingId == listingId)
+                    .OrderBy(i => i.SortOrder)
+                    .Select(i => new PetImageDTO
+                    {
+                        ImageId = i.ImageId,
+                        ListingId = i.ListingId,
+                        IsPrimary = i.IsPrimary,
+                        Caption = i.Caption,
+                        SortOrder = i.SortOrder,
+                        CreatedAt = i.CreatedAt,
+                        ImageUrl = i.ImageUrl
+                    })
+                    .ToListAsync();
+
+                if (!images.Any())
+                    return NotFound("No images found for this listing");
+
+                return Ok(images);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    error = ex.Message,
+                    innerException = ex.InnerException?.Message
+                });
+            }
+        }
+
+
+    } 
 }
