@@ -173,3 +173,4 @@ C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\Pethub.Server\bin\D
 C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\Pethub.Server\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\Pethub.Server\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\Pethub.Server\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\Pethub.Server\obj\Debug\net8.0\Pethub.Server.sourcelink.json

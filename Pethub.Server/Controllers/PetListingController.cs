@@ -25,8 +25,8 @@ namespace pethub.Server.Controllers
             return Ok(petPosts);
         }
 
-        [HttpPost("AddPetList")]
-        public async Task<ActionResult<PetListing>> AddPetList([FromBody] CreatePetListingDTO petlistDto)
+        [HttpPost("AddUpdatePetList")]
+        public async Task<ActionResult<PetListing>> AddUpdatePetList([FromBody] CreatePetListingDTO petlistDto)
         {
             if (ModelState.IsValid)
             {
