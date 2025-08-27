@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "pethub.client\\pethub.client.esproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Pethub.Server\\Pethub.Server.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
