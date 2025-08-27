@@ -1,7 +1,7 @@
 wwwroot\index.html
 wwwroot\Uploads\Images\80c9d162-bcc8-41ba-91ae-937df16d3482.jpg
 wwwroot\Uploads\Images\PetListingImages\70760a80-1f40-4db1-94dd-50eb4861ab8a.webp
-wwwroot\vssver2.scc
 wwwroot\Uploads\Images\ShopLogo\2d1fd76c-4619-4894-ab9f-21e814d37ef9.webp
+wwwroot\Uploads\Images\ShopLogo\6bb9dbfb-f369-4bf7-81c9-5bbb87567a1a.webp
 wwwroot\Uploads\Images\ShopLogo\8de18ba9-f43a-41d5-bc77-50ca55cfe0e9.webp
-wwwroot\Uploads\Images\ShopLogo\30cff5d1-2ce3-4a0e-9ad3-2cdd56e362e7.webp
+wwwroot\vssver2.scc

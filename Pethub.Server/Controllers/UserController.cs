@@ -35,8 +35,8 @@ namespace Pethub.Server.Controllers
         }
 
 
-        [HttpPost("AddNewUser")]
-        public async Task<ActionResult> AddNewUser([FromForm] IFormFile? uploadProfileImages, [FromForm] string UserInputData)
+        [HttpPost("AddUpdateNewUser")]
+        public async Task<ActionResult> AddUpdateNewUser([FromForm] IFormFile? uploadProfileImages, [FromForm] string UserInputData)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

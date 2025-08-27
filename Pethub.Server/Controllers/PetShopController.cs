@@ -101,7 +101,7 @@ namespace pethub.Server.Controllers
 
                         {
                             var oldRelativePath = petshopData.Logo.Replace(baseUrl, "").TrimStart('/');
-                            var oldFilePath = Path.Combine(uploadDirectory, Path.GetFileName(oldRelativePath));
+                            var oldFilePath = Path.Combine(uploadDirectory, Path.GetFileName(oldRelativePath)); 
                             if (System.IO.File.Exists(oldFilePath))
                             {
                                 System.IO.File.Delete(oldFilePath);

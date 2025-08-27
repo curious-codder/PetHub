@@ -24,8 +24,8 @@ namespace Pethub.Server.Controllers
             return Ok(await _context.UserProfiles.ToListAsync());
         }
 
-        [HttpPost("AddUpdateUserFavorites")]
-        public async Task<ActionResult<UserProfile>> AddUpdateUserFavorites([FromBody] UserProfileDTO userProf)
+        [HttpPost("AddUpdateUserProfile")]
+        public async Task<ActionResult<UserProfile>> AddUpdateUserProfile([FromBody] UserProfileDTO userProf)
         {
             if (ModelState.IsValid)
             {
