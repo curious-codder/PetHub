@@ -32,6 +32,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Uploads\Images\ShopLogo\" />
+    <Folder Include="wwwroot\Uploads\Images\ProfileImages\" />
     <Folder Include="wwwroot\Uploads\Images\PetListingImages\" />
   </ItemGroup>
 

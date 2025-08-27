@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using pethub.Server.CustomModels;
+using Pethub.Server.CustomModels;
 using Pethub.Server.Models;
+using System.Text.Json;
 
 namespace pethub.Server.Controllers
 {
@@ -26,44 +28,98 @@ namespace pethub.Server.Controllers
 
             return Ok(petShoplist);
         }
-
-        [HttpPost("AddUpdatePetShop")]
-        public async Task<ActionResult<PetShopDTO>> AddUpdatePetShop([FromBody] PetShopDTO petshopDto)
+   
+        [HttpPost("AddUpdateThePetShop")]
+     
+        public async Task<ActionResult> AddUpdateThePetShop([FromForm] IFormFile? LogoImage, [FromForm] string UserInputData)
         {
             if (ModelState.IsValid)
             {
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                if (string.IsNullOrEmpty(UserInputData))
+                    return BadRequest("Important values are missing !!.");
+
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var petshopData = JsonSerializer.Deserialize<PetShop>(UserInputData, options);
+
+                if ((LogoImage == null) && string.IsNullOrEmpty(petshopData.Logo))
+                    return BadRequest("Important values are missing !!.");
+
+                var uploadDirectory = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Uploads", "Images", "ShopLogo");
+                if (!Directory.Exists(uploadDirectory))
+                    Directory.CreateDirectory(uploadDirectory);
+
+                var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                var uploadedUrls = "";
+
+                if (LogoImage != null && LogoImage.Length > 0)
+                {
+                    var uniqueFileName = Guid.NewGuid() + Path.GetExtension(LogoImage.FileName);
+                    var filePath = Path.Combine(uploadDirectory, uniqueFileName);
+                    var relativePath = $"/Uploads/Images/ShopLogo/{uniqueFileName}";
+                    var fileUrl = baseUrl + relativePath;
+                    uploadedUrls = fileUrl;
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await LogoImage.CopyToAsync(stream);
+                    }
+                }
+                PetShop petShop = new PetShop();
+
+                petShop.OwnerId = petshopData.OwnerId;
+                petShop.ShopName = petshopData.ShopName;
+                petShop.Description = petshopData.Description;
+                petShop.Address = petshopData.Address;
+                petShop.City = petshopData.City;
+                petShop.State = petshopData.State;
+                petShop.Country = petshopData.Country;
+                petShop.PostalCode = petshopData.PostalCode;
+                petShop.PhoneNumber = petshopData.PhoneNumber;
+                petShop.Email = petshopData.Email;
+                petShop.Website = petshopData.Website;
+                petShop.BusinessLicense = petshopData.BusinessLicense;
+                petShop.TaxId = petshopData.TaxId;
+                petShop.Rating = petshopData.Rating;
+                petShop.TotalReviews = petshopData.TotalReviews;
+                petShop.IsVerified = petshopData.IsVerified;
+                petShop.IsActive = true;
+                //petShop.Logo = uploadedUrls;
+
                 try
                 {
-                    PetShop petShop = new PetShop();
-                   
-                    petShop.OwnerId = petshopDto.OwnerId;
-                    petShop.ShopName = petshopDto.ShopName;
-                    petShop.Description = petshopDto.Description;
-                    petShop.Address = petshopDto.Address;
-                    petShop.City = petshopDto.City;
-                    petShop.State = petshopDto.State;
-                    petShop.Country = petshopDto.Country;
-                    petShop.PostalCode = petshopDto.PostalCode;
-                    petShop.PhoneNumber = petshopDto.PhoneNumber;
-                    petShop.Email = petshopDto.Email;
-                    petShop.Website = petshopDto.Website;
-                    petShop.Logo = petshopDto.Logo;
-                    petShop.BusinessLicense = petshopDto.BusinessLicense;
-                    petShop.TaxId = petshopDto.TaxId;
-                    petShop.Rating = petshopDto.Rating;
-                    petShop.TotalReviews = petshopDto.TotalReviews;
-                    petShop.IsVerified = petshopDto.IsVerified;
-                    petShop.IsActive = petshopDto.IsActive;
-                    petShop.CreatedAt = petshopDto.CreatedAt;
-                    petShop.UpdatedAt = petshopDto.UpdatedAt;
-
-                    if(petshopDto.ShopId !=0)
+                    if (petshopData.ShopId != 0)
                     {
-                        petShop.ShopId = petshopDto.ShopId;
+                        if (!string.IsNullOrEmpty(petshopData.Logo) && uploadedUrls != "")
+
+                        {
+                            var oldRelativePath = petshopData.Logo.Replace(baseUrl, "").TrimStart('/');
+                            var oldFilePath = Path.Combine(uploadDirectory, Path.GetFileName(oldRelativePath));
+                            if (System.IO.File.Exists(oldFilePath))
+                            {
+                                System.IO.File.Delete(oldFilePath);
+                            }
+                            petShop.Logo = uploadedUrls;
+                        }
+                        else
+                        {
+                            petShop.Logo = uploadedUrls;
+                        }
+                        petShop.CreatedAt = petshopData.CreatedAt;
+                        petShop.UpdatedAt = DateTime.Now;
+                        petShop.ShopId = petshopData.ShopId;
                         _context.PetShops.Update(petShop);
                     }
                     else
                     {
+                        petShop.CreatedAt = DateTime.Now;
                         _context.PetShops.Add(petShop);
                     }
                     await _context.SaveChangesAsync();
@@ -80,6 +136,7 @@ namespace pethub.Server.Controllers
             }
             return BadRequest(ModelState);
         }
+
         [HttpDelete("DeletePetShop/{petShopId}")]
         public async Task<IActionResult> DeletePetShop(long petShopId)
         {
@@ -110,10 +167,10 @@ namespace pethub.Server.Controllers
                 petShop.TaxId = petShopData.TaxId;
                 petShop.Rating = petShopData.Rating;
                 petShop.TotalReviews = petShopData.TotalReviews;
-                petShop.IsActive = petShopData.IsActive;
                 petShop.CreatedAt = petShopData.CreatedAt;
-                petShop.UpdatedAt = petShopData.UpdatedAt;
-                petShop.IsVerified = false;
+                petShop.IsVerified = petShopData.IsActive;
+                petShop.IsActive = false;
+                petShop.UpdatedAt = DateTime.Now;
 
                 _context.PetShops.Update(petShop);
                 await _context.SaveChangesAsync();

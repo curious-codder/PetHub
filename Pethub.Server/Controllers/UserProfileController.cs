@@ -39,15 +39,17 @@ namespace Pethub.Server.Controllers
                     profile.Website = userProf.Website;
                     profile.SocialMediaLinks = userProf.SocialMediaLinks;
                     profile.PreferredContactMethod = userProf.PreferredContactMethod;
-                    profile.CreatedAt = userProf.CreatedAt;
-                    profile.UpdatedAt = userProf.UpdatedAt;
 
-                    if(userProf.ProfileId != 0){
+                    if (userProf.ProfileId != 0)
+                    {
+                        profile.CreatedAt = userProf.CreatedAt;
+                        profile.UpdatedAt = DateTime.Now;
                         profile.ProfileId = userProf.ProfileId;
                         _context.UserProfiles.Update(profile);
                     }
                     else
                     {
+                        profile.CreatedAt = DateTime.Now;
                         _context.UserProfiles.Add(profile);
                     }
                     await _context.SaveChangesAsync();
