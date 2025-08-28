@@ -3,3 +3,4 @@ D:\Works\webdev\React_projects\pethub\pethub\pethub.client\obj\Debug\pethub.clie
 D:\Works\webdev\React_projects\pethub\pethub\pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
 C:\Users\https\OneDrive\Desktop\2025\pethub\pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
 C:\Users\https\OneDrive\Desktop\Project\PethubProject\Pethub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache
+C:\Users\Ajin\Desktop\temp\woof-whiskers-webshop-main\petH\PetHub\pethub.client\obj\Debug\pethub.client.esproj.CoreCompileInputs.cache

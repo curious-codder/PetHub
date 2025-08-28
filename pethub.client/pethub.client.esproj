@@ -7,7 +7,9 @@
     <ShouldRunBuildScript>false</ShouldRunBuildScript>
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
-  </PropertyGroup>
+
+		<EnableGeneratePackageJsonProps>false</EnableGeneratePackageJsonProps>
+	</PropertyGroup>
   <ItemGroup>
     <None Include=".vscode\launch.json" />
   </ItemGroup>
